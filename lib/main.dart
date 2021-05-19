@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/cubit/bloc_observer.dart';
 import 'package:news_app/layouts/home_screen.dart';
+import 'package:news_app/shared/network/remote/dio_helper.dart';
 
-void main() => runApp(NewsApp());
+void main() {
+  runApp(NewsApp());
+  Bloc.observer = MyBlocObserver();
+  DioHelper.init();
+}
 
 class NewsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
-        return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-                scaffoldBackgroundColor: Colors.white,
-                appBarTheme: AppBarTheme(
-                  titleTextStyle: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                  backgroundColor: Colors.white,
-                  backwardsCompatibility: false,
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: Colors.white,
-                    // statusBarBrightness: Brightness.dark,
-                    statusBarIconBrightness: Brightness.dark,
-                  ),
-                  elevation: 0.3,
-                ),
-                bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                  selectedItemColor: Colors.red[600],
-                  elevation: 1,
-                  showUnselectedLabels: false,
-                  type: BottomNavigationBarType.fixed,
-                )),
-            home: HomeScreen());
-      }
-    
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            primarySwatch: Colors.red,
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: AppBarTheme(
+              titleTextStyle: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              backgroundColor: Colors.white,
+              backwardsCompatibility: false,
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: Colors.white,
+                // statusBarBrightness: Brightness.dark,
+                statusBarIconBrightness: Brightness.dark,
+              ),
+              elevation: 0.3,
+            ),
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              selectedItemColor: Colors.red[600],
+              elevation: 1,
+              showUnselectedLabels: false,
+              type: BottomNavigationBarType.fixed,
+            ),
+            floatingActionButtonTheme:
+                FloatingActionButtonThemeData(backgroundColor: Colors.red)),
+        home: HomeScreen());
   }
-
+}

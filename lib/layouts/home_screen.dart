@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppCubit(),
+      create: (context) => AppCubit()..getBusiness(),
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
                 cubit.getBottomNavIndex(index);
               },
             ),
+            
             body: cubit.screens[cubit.currentIndex],
           );
         },
@@ -32,8 +33,3 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-/*TODO
-  [ ]test
-  [ ]test
-
-*/
