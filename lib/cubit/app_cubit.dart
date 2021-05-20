@@ -42,7 +42,6 @@ class AppCubit extends Cubit<AppState> {
   // Retrieve business data
   void getBusiness() {
     emit(NewsBusinessLoadingState());
-
     DioHelper.getData(urlMethod: "v2/top-headlines", query: {
       "country": "eg",
       "category": "business",
@@ -57,7 +56,6 @@ class AppCubit extends Cubit<AppState> {
 
   // Retrieve science data
   void getScience() {
-    
     if (science.length == 0) {
       emit(NewsScienceLoadingState());
       DioHelper.getData(urlMethod: "v2/top-headlines", query: {
@@ -77,7 +75,6 @@ class AppCubit extends Cubit<AppState> {
 
   // Retrieve sport data
   void getSport() {
-    
     if (sport.length == 0) {
       emit(NewsSportLoadingState());
       DioHelper.getData(urlMethod: "v2/top-headlines", query: {
@@ -93,5 +90,12 @@ class AppCubit extends Cubit<AppState> {
     } else {
       emit(NewsSportStateSuccess());
     }
+  }
+
+  bool isDark = false;
+  void changeMode() {
+    isDark = !isDark;
+    print(isDark);
+    emit(NewsChangeModeState());
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/cubit/app_cubit.dart';
+import 'package:news_app/cubit/app_state.dart';
 import 'package:news_app/cubit/bloc_observer.dart';
 import 'package:news_app/layouts/home_screen.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
+
 
 void main() {
   runApp(NewsApp());
@@ -14,33 +17,87 @@ void main() {
 class NewsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            primarySwatch: Colors.red,
-            scaffoldBackgroundColor: Colors.white,
-            appBarTheme: AppBarTheme(
-              titleTextStyle: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-              backgroundColor: Colors.white,
-              backwardsCompatibility: false,
-              systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarColor: Colors.white,
-                // statusBarBrightness: Brightness.dark,
-                statusBarIconBrightness: Brightness.dark,
-              ),
-              elevation: 0.3,
-            ),
-            bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              selectedItemColor: Colors.red[600],
-              elevation: 1,
-              showUnselectedLabels: false,
-              type: BottomNavigationBarType.fixed,
-            ),
-            floatingActionButtonTheme:
-                FloatingActionButtonThemeData(backgroundColor: Colors.red)),
-        home: HomeScreen());
+    return BlocProvider(
+      create: (BuildContext context) => AppCubit()..getBusiness(),
+      child: BlocConsumer<AppCubit, AppState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                  primarySwatch: Colors.red,
+                  scaffoldBackgroundColor: Colors.white,
+                  appBarTheme: AppBarTheme(
+                    actionsIconTheme:
+                        IconThemeData(size: 35, color: Colors.black),
+                    titleTextStyle: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                    backgroundColor: Colors.white,
+                    backwardsCompatibility: false,
+                    systemOverlayStyle: SystemUiOverlayStyle(
+                      statusBarColor: Colors.white,
+                      // statusBarBrightness: Brightness.dark,
+                      statusBarIconBrightness: Brightness.dark,
+                    ),
+                    elevation: 0.4,
+                  ),
+                  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                    selectedItemColor: Colors.red[600],
+                    backgroundColor: Colors.grey[100],
+                    unselectedItemColor: Colors.black,
+
+                    elevation: 1.5,
+                    showUnselectedLabels: false,
+                    type: BottomNavigationBarType.fixed,
+                  ),
+                  textTheme: TextTheme(
+                      subtitle1: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold))),
+              darkTheme: ThemeData(
+                  scaffoldBackgroundColor: Colors.black87,
+                  primarySwatch: Colors.red,
+                  appBarTheme: AppBarTheme(
+                    actionsIconTheme:
+                        IconThemeData(size: 35, color: Colors.white),
+                    titleTextStyle: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                    backgroundColor: Colors.black87,
+                    backwardsCompatibility: false,
+                    systemOverlayStyle: SystemUiOverlayStyle(
+                      statusBarColor: Colors.black87,
+                      statusBarIconBrightness: Brightness.light,
+                    ),
+                    elevation: 2,
+                  ),
+                  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                    unselectedItemColor: Colors.grey[400],
+                    backgroundColor: Colors.grey[900],
+                    selectedItemColor: Colors.red[600],
+                    
+                    showUnselectedLabels: false,
+                    type: BottomNavigationBarType.fixed,
+                  ),
+                  textTheme: TextTheme(
+                      subtitle1: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                          )
+                          )
+                          ),
+              themeMode: AppCubit.get(context).isDark
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+              home: HomeScreen()
+              );
+        },
+      ),
+    );
   }
 }

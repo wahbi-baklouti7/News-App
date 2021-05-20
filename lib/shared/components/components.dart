@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-Padding buildArticleItem(article) {
-   String date=article["publishedAt"];
-  date=date.substring(0,10)+"  "+date.substring(12,16);
-  
+Widget buildArticleItem(article,context) {
+  String date = article["publishedAt"];
+  date = date.substring(0, 10) + "  " + date.substring(12, 16);
+
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: Row(
@@ -28,12 +28,10 @@ Padding buildArticleItem(article) {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
-                  child: Text(
-                    "${article["title"]}",
+                  child: Text("${article["title"]}",
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      style:Theme.of(context).textTheme.subtitle1),
                 ),
                 Text("$date",
                     style: TextStyle(fontSize: 12, color: Colors.grey))
@@ -46,7 +44,8 @@ Padding buildArticleItem(article) {
   );
 }
 
-ListView articleBuilder(List list) {
+
+Widget articleBuilder(List list,context) {
   return ListView.separated(
     physics: BouncingScrollPhysics(),
     separatorBuilder: (context, index) => Divider(
@@ -55,7 +54,7 @@ ListView articleBuilder(List list) {
     ),
     itemCount: list.length,
     itemBuilder: (BuildContext context, index) {
-      return buildArticleItem(list[index]);
+      return buildArticleItem(list[index],context);
     },
   );
 }

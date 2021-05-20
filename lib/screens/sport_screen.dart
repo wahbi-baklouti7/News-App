@@ -15,7 +15,7 @@ class SportScreen extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
 
-          return articleBuilder(list);
+          return articleBuilder(list,context);
         });
   }
 }
