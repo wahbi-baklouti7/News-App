@@ -5,20 +5,32 @@ import 'package:news_app/cubit/app_cubit.dart';
 import 'package:news_app/cubit/app_state.dart';
 import 'package:news_app/cubit/bloc_observer.dart';
 import 'package:news_app/layouts/home_screen.dart';
+import 'package:news_app/shared/network/locale/cacher_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 
 
-void main() {
-  runApp(NewsApp());
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
+  await CacheHelper.init();
+  bool isDark = CacheHelper.getBool(key: "isDark");
+  runApp(NewsApp(isDark));
+
 }
 
+
 class NewsApp extends StatelessWidget {
+  final bool isDark;
+  NewsApp(this.isDark);
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..getBusiness(),
+      create: (BuildContext context) => AppCubit()..getBusiness()..changeMode(
+        fromShared: isDark
+      ),
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -47,7 +59,6 @@ class NewsApp extends StatelessWidget {
                     selectedItemColor: Colors.red[600],
                     backgroundColor: Colors.grey[100],
                     unselectedItemColor: Colors.black,
-
                     elevation: 1.5,
                     showUnselectedLabels: false,
                     type: BottomNavigationBarType.fixed,
@@ -79,7 +90,6 @@ class NewsApp extends StatelessWidget {
                     unselectedItemColor: Colors.grey[400],
                     backgroundColor: Colors.grey[900],
                     selectedItemColor: Colors.red[600],
-                    
                     showUnselectedLabels: false,
                     type: BottomNavigationBarType.fixed,
                   ),
@@ -87,15 +97,11 @@ class NewsApp extends StatelessWidget {
                       subtitle1: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold
-                          )
-                          )
-                          ),
+                          fontWeight: FontWeight.bold))),
               themeMode: AppCubit.get(context).isDark
                   ? ThemeMode.dark
                   : ThemeMode.light,
-              home: HomeScreen()
-              );
+              home: HomeScreen());
         },
       ),
     );
