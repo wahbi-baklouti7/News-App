@@ -28,6 +28,7 @@ class AppCubit extends Cubit<AppState> {
   List<dynamic> business = [];
   List<dynamic> science = [];
   List<dynamic> sport = [];
+  List<dynamic> search =[];
 
   // Get the current index of bottom navigator when tapping
   void getBottomNavIndex(int index) {
@@ -91,6 +92,20 @@ class AppCubit extends Cubit<AppState> {
     } else {
       emit(NewsSportStateSuccess());
     }
+  }
+
+  void searchData(String input) {
+    search =[];
+    emit(NewsSearchLoadingState());
+    DioHelper.getData(urlMethod: "v2/everything", query: {
+      "q":"$input",
+      "apiKey": "f2526056031b431d853ae5d7b0259c4e"
+    }).then((value) {
+      search = value.data["articles"];
+      emit(NewsSearchStateSuccess());
+    }).catchError((error) {
+      emit(NewsSearchStateError(error: error.toString()));
+    });
   }
 
   bool isDark = false;

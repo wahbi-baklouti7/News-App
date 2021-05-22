@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/cubit/app_cubit.dart';
 import 'package:news_app/cubit/app_state.dart';
-
-
+import 'package:news_app/screens/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -21,7 +20,10 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   child: Icon(Icons.search),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SearchScreen()));
+                  },
                 ),
               ),
               Padding(

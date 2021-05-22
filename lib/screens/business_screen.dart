@@ -4,6 +4,7 @@ import 'package:news_app/cubit/app_cubit.dart';
 import 'package:news_app/cubit/app_state.dart';
 import 'package:news_app/shared/components/components.dart';
 
+
 class BusinessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -18,7 +18,6 @@ void main() async {
   await CacheHelper.init();
   bool isDark = CacheHelper.getBool(key: "isDark");
   runApp(NewsApp(isDark));
-
 }
 
 
@@ -40,6 +39,7 @@ class NewsApp extends StatelessWidget {
                   primarySwatch: Colors.red,
                   scaffoldBackgroundColor: Colors.white,
                   appBarTheme: AppBarTheme(
+                    iconTheme: IconThemeData(color: Colors.black),
                     actionsIconTheme:
                         IconThemeData(size: 35, color: Colors.black),
                     titleTextStyle: TextStyle(
@@ -69,9 +69,16 @@ class NewsApp extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold))),
               darkTheme: ThemeData(
+                inputDecorationTheme: InputDecorationTheme(
+
+                  prefixStyle: TextStyle(color: Colors.grey,fontSize: 25),
+                  labelStyle: TextStyle(color: Colors.grey,fontSize: 20,),
+                  
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white))),
                   scaffoldBackgroundColor: Colors.black87,
                   primarySwatch: Colors.red,
                   appBarTheme: AppBarTheme(
+                    iconTheme: IconThemeData(color: Colors.white),
                     actionsIconTheme:
                         IconThemeData(size: 35, color: Colors.white),
                     titleTextStyle: TextStyle(
@@ -93,6 +100,7 @@ class NewsApp extends StatelessWidget {
                     showUnselectedLabels: false,
                     type: BottomNavigationBarType.fixed,
                   ),
+                  
                   textTheme: TextTheme(
                       subtitle1: TextStyle(
                           color: Colors.white,
