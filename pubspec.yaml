@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc:
   dio: ^4.0.0
   shared_preferences:
+  webview_flutter: ^2.0.7
 
 
   
